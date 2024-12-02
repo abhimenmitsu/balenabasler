@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY pylon-5.2.0.13457-x86.tar.gz /usr/src/app/
 # Install the Pylon SDK for ARM
 # Ensure the Pylon tarball is for ARM architecture, not x86
-RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-x86.tar.gz &&
+RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-x86.tar.gz
     # ./usr/src/app/pylon-5.2.0.13457-x86/setup-usb.sh -y
 
 # Create application directory
