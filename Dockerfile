@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-COPY pylon-5.2.0.13457-arm.tar.gz /usr/src/app/
+COPY pylon-5.2.0.13457-x86.tar.gz /usr/src/app/
 # Install the Pylon SDK for ARM
 # Ensure the Pylon tarball is for ARM architecture, not x86
 RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-x86.tar.gz && \
