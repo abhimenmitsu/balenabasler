@@ -28,7 +28,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-
+COPY pylon-5.2.0.13457-arm.tar.gz /usr/src/app/
+# Install the Pylon SDK for ARM
+# Ensure the Pylon tarball is for ARM architecture, not x86
+RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-arm.tar.gz && \
+    ./usr/src/app/pylon-5.2.0.13457-arm/setup-usb.sh -y
 
 # Create application directory
 WORKDIR /usr/src/app
@@ -36,10 +40,7 @@ WORKDIR /usr/src/app
 # Copy source code to container
 COPY . .
 
-# Install the Pylon SDK for ARM
-# Ensure the Pylon tarball is for ARM architecture, not x86
-RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-arm.tar.gz && \
-    ./usr/src/app/pylon-5.2.0.13457-arm/setup-usb.sh -y
+
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
