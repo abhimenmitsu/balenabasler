@@ -44,7 +44,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Build the application
-RUN g++ -o camera_app main.cpp $(pkg-config --cflags --libs opencv4) -lpylonbase -lpylonutility
+RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -lpylonbase -lpylonutility
 
 # Ensure the output directory for frames exists
 RUN mkdir -p significant_changes_frames
