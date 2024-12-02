@@ -4,6 +4,7 @@ LABEL io.balena.device-type="raspberrypicm4-ioboard"
 
 # Set up environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
+ENV UDEV=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -27,14 +28,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libopencv-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Pylon SDK dependencies
-RUN wget https://www.baslerweb.com/fp-1575732014/media/downloads/software/pylon_7.0.1.12798-deb0-amd64.tar.gz && \
-    tar -xzf pylon_7.0.1.12798-deb0-amd64.tar.gz && \
-    ./pylon-7.0.1.12798-amd64/bin/pylon_install.sh -y && \
-    rm -rf pylon_7.0.1.12798-deb0-amd64.tar.gz
+# Install the Pylon SDK for ARM
+RUN wget https://www.baslerweb.com/fp-1575732014/media/downloads/software/pylon_7.0.1.12798-deb0-armhf.tar.gz && \
+    tar -xzf pylon_7.0.1.12798-deb0-armhf.tar.gz && \
+    ./pylon-7.0.1.12798-armhf/bin/pylon_install.sh -y && \
+    rm -rf pylon_7.0.1.12798-deb0-armhf.tar.gz
 
 # Set environment variables for Pylon SDK
-ENV LD_LIBRARY_PATH=/opt/pylon/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
 ENV PATH=/opt/pylon/bin:$PATH
 
 # Create application directory
