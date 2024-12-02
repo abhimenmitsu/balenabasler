@@ -27,6 +27,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+
+
 # Create application directory
 WORKDIR /usr/src/app
 
@@ -35,9 +38,8 @@ COPY . .
 
 # Install the Pylon SDK for ARM
 # Ensure the Pylon tarball is for ARM architecture, not x86
-RUN tar -xzf pylon-5.2.0.13457-arm.tar.gz && \
-    cd pylon-5.2.0.13457-arm && \
-    ./setup-usb.sh -y
+RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-arm.tar.gz && \
+    ./usr/src/app/pylon-5.2.0.13457-arm/setup-usb.sh -y
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
