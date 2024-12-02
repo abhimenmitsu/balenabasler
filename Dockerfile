@@ -29,10 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install the Pylon SDK for ARM
-RUN wget https://www.baslerweb.com/fp-1575732014/media/downloads/software/pylon_7.0.1.12798-deb0-armhf.tar.gz && \
-    tar -xzf pylon_7.0.1.12798-deb0-armhf.tar.gz && \
-    ./pylon-7.0.1.12798-armhf/bin/pylon_install.sh -y && \
-    rm -rf pylon_7.0.1.12798-deb0-armhf.tar.gz
+RUN wget https://www.baslerweb.com/fp-1575732014/media/downloads/software/pylon-5.2.0.13457-x86.tar.gz && \
+    tar -xzf pylon-5.2.0.13457-x86.tar.gz && \
+    ./pylon-5.2.0.13457-x86/bin/pylon_install.sh -y && \
+    rm -rf pylon-5.2.0.13457-x86.tar.gz
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
