@@ -30,9 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 
-# Set environment variables for Pylon SDK
-ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
-ENV PATH=/opt/pylon/bin:$PATH
+
 
 # Create application directory
 WORKDIR /usr/src/app
@@ -44,6 +42,10 @@ COPY . .
 RUN tar -xzf pylon-5.2.0.13457-x86.tar.gz && \
     ./pylon-5.2.0.13457-x86/bin/pylon_install.sh -y && \
     rm -rf pylon-5.2.0.13457-x86.tar.gz
+
+# Set environment variables for Pylon SDK
+ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
+ENV PATH=/opt/pylon/bin:$PATH
 
 # Build the application
 RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -lpylonbase -lpylonutility
