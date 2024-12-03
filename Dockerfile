@@ -34,7 +34,7 @@ COPY pylon-5.2.0.13457-armhf.tar.gz /usr/src/app/
 # Update this section to ensure the correct architecture tarball is used for ARM, not x86
 RUN mkdir -p /opt/pylon && \
     tar -xzf /usr/src/app/pylon-5.2.0.13457-armhf.tar.gz -C /opt/pylon --strip-components=1 && \
-    /opt/pylon/setup-usb.sh -y
+    yes | /opt/pylon/setup-usb.sh
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
