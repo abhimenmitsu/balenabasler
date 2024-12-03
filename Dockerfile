@@ -22,11 +22,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the Pylon SDK tarball into the container
-COPY pylon_6.1.3.20159_armhf.tar.gz /usr/src/app/
+COPY pylon_6.1.3.20159_armhf1.tar.gz /usr/src/app/
 
 # Install the Pylon SDK
 RUN mkdir -p ${PYLON_ROOT} && \
-    tar -xzf /usr/src/app/pylon_6.1.3.20159_armhf.tar.gz -C ${PYLON_ROOT} --strip-components=1 && \
+    tar -xzf /usr/src/app/pylon_6.1.3.20159_armhf1.tar.gz -C ${PYLON_ROOT} --strip-components=1 && \
     sudo chmod 755 /opt/pylon && \
     yes | ${PYLON_ROOT}/share/pylon/setup-usb.sh
 
