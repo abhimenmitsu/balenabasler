@@ -28,7 +28,7 @@ COPY pylon_6.1.3.20159_armhf.tar.gz /usr/src/app/
 RUN mkdir -p ${PYLON_ROOT} && \
     tar -xzf /usr/src/app/pylon_6.1.3.20159_armhf.tar.gz -C ${PYLON_ROOT} --strip-components=1 && \
     sudo chmod 755 /opt/pylon && \
-    yes | ${PYLON_ROOT}/pylon_6.1.3.20159_armhf/share/pylon/setup-usb.sh
+    yes | ${PYLON_ROOT}/share/pylon/setup-usb.sh
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=${PYLON_ROOT}/lib:$LD_LIBRARY_PATH
