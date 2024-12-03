@@ -27,34 +27,33 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Copy the Pylon SDK tarball into the container
+COPY pylon-5.2.0.13457-armhf.tar.gz /usr/src/app/
 
-COPY pylon-5.2.0.13457-x86.tar.gz /usr/src/app/
-# Install the Pylon SDK for ARM
-# Ensure the Pylon tarball is for ARM architecture, not x86
-RUN tar -xzf /usr/src/app/pylon-5.2.0.13457-x86.tar.gz
-    # ./usr/src/app/pylon-5.2.0.13457-x86/setup-usb.sh -y
-
-# Create application directory
-WORKDIR /usr/src/app
-
-# Copy source code to container
-COPY . .
-
-
+# Install the Pylon SDK
+# Update this section to ensure the correct architecture tarball is used for ARM, not x86
+RUN mkdir -p /opt/pylon && \
+    tar -xzf /usr/src/app/pylon-5.2.0.13457-armhf.tar.gz -C /opt/pylon --strip-components=1 && \
+    /opt/pylon/setup-usb.sh -y
 
 # Set environment variables for Pylon SDK
 ENV LD_LIBRARY_PATH=/opt/pylon/lib:$LD_LIBRARY_PATH
 ENV PATH=/opt/pylon/bin:$PATH
 
+# Create the application working directory
+WORKDIR /usr/src/app
+
+# Copy the source code into the container
+COPY bsfast.cpp .
+
 # Build the application
-# Ensure bsfast.cpp exists and adjust libraries if needed
-RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -lpylonbase -lpylonutility
+RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -L/opt/pylon/lib -lpylonbase -lpylonutility
 
-# Ensure the output directory for frames exists
-RUN mkdir -p significant_changes_frames
+# Create the output directory for frames
+RUN mkdir -p /usr/src/app/significant_changes_frames
 
-# Expose a port if required (adjust based on your application)
+# Expose the application port if required
 EXPOSE 8080
 
-# Entry point for the application
+# Set the container's entry point
 CMD ["./camera_app"]
