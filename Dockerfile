@@ -20,11 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the Pylon SDK tarball into the container
-COPY pylon-5.2.0.13457-armhf.tar.gz /usr/src/app/
+COPY pylon_6.1.3.20159_armhf_setup.tar.gz /usr/src/app/
 
 # Install the Pylon SDK
 RUN mkdir -p /opt/pylon && \
-    tar -xzf /usr/src/app/pylon-5.2.0.13457-armhf.tar.gz -C /opt/pylon --strip-components=1 && \
+    tar -xzf /usr/src/app/pylon_6.1.3.20159_armhf_setup.tar.gz -C /opt/pylon --strip-components=1 && \
     yes | /opt/pylon/setup-usb.sh
 
 # Set environment variables for Pylon SDK
@@ -37,8 +37,12 @@ WORKDIR /usr/src/app
 # Copy the source code into the container
 COPY bsfast.cpp .
 
+
+# Verify OpenCV installation
+RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
+
 # Build the application
-RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
+RUN g++ -o camera_app bsfast.cpp $(pkg-config --libs opencv) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
 
 # Create the output directory for frames
 RUN mkdir -p /usr/src/app/significant_changes_frames
