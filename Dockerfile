@@ -48,7 +48,15 @@ RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
 #RUN file /opt/pylon/lib/libpylonbase.so
 
 # Build the application using the specified flags
-RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
+# RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
+RUN g++ -o camera_app bsfast.cpp \
+    $(${PYLON_ROOT}/bin/pylon-config --cflags) \
+    -I/usr/include/opencv4 \
+    -g -O2 \
+    $(${PYLON_ROOT}/bin/pylon-config --libs-rpath) \
+    $(${PYLON_ROOT}/bin/pylon-config --libs) \
+    $(pkg-config --libs opencv4)
+
 
 # Create the output directory for frames
 RUN mkdir -p /usr/src/app/significant_changes_frames
