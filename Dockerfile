@@ -43,7 +43,9 @@ WORKDIR /usr/src/app
 # Copy the source code into the container
 COPY bsfast.cpp .
 
-RUN file /opt/pylon/lib/libpylonbase.so
+RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
+
+#RUN file /opt/pylon/lib/libpylonbase.so
 
 # Build the application using the specified flags
 RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
