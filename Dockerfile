@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-    RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
+RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
 
 
 # Copy the Pylon SDK tarball into the container
@@ -45,11 +45,11 @@ COPY bsfast.cpp .
 # Build the application using the specified flags
 RUN g++ -o camera_app bsfast.cpp \
     $(${PYLON_ROOT}/bin/pylon-config --cflags) \
-    -I/usr/include/opencv4 \
+    -I/usr/include/opencv \
     -g -O2 \
     $(${PYLON_ROOT}/bin/pylon-config --libs-rpath) \
     $(${PYLON_ROOT}/bin/pylon-config --libs) \
-    $(pkg-config --libs opencv4)
+    $(pkg-config --libs opencv)
 
 # Create the output directory for frames
 RUN mkdir -p /usr/src/app/significant_changes_frames
