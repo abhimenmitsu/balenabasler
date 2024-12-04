@@ -51,10 +51,17 @@ RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
 
 # Build the application using the specified flags
 # RUN g++ -o camera_app bsfast.cpp $(pkg-config --cflags --libs opencv4) -I/opt/pylon/include -L/opt/pylon/lib -lpylonbase -lpylonutility
-RUN g++ -o camera_app bs.cpp \
+# RUN g++ -o camera_app bs.cpp \
+#     $(${PYLON_ROOT}/bin/pylon-config --cflags) \
+#     -I/usr/include/opencv4 \
+#     -g -O2 \
+#     $(${PYLON_ROOT}/bin/pylon-config --libs-rpath) \
+#     $(${PYLON_ROOT}/bin/pylon-config --libs) \
+#     $(pkg-config --libs opencv4)
+
+RUN g++ -std=c++11 -o camera_app bs.cpp \
     $(${PYLON_ROOT}/bin/pylon-config --cflags) \
-    -I/usr/include/opencv4 \
-    -g -O2 \
+    -I/usr/include/opencv4 -g -O2 \
     $(${PYLON_ROOT}/bin/pylon-config --libs-rpath) \
     $(${PYLON_ROOT}/bin/pylon-config --libs) \
     $(pkg-config --libs opencv4)
