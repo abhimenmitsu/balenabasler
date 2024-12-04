@@ -45,11 +45,11 @@ COPY bsfast.cpp .
 # Build the application using the specified flags
 RUN g++ -o camera_app bsfast.cpp \
     $(${PYLON_ROOT}/bin/pylon-config --cflags) \
-    -I/usr/include/opencv \
+    -I/usr/include/opencv4 \
     -g -O2 \
     $(${PYLON_ROOT}/bin/pylon-config --libs-rpath) \
     $(${PYLON_ROOT}/bin/pylon-config --libs) \
-    $(pkg-config --libs opencv)
+    $(pkg-config --libs opencv4)
 
 # Create the output directory for frames
 RUN mkdir -p /usr/src/app/significant_changes_frames
