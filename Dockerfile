@@ -1,5 +1,5 @@
 # Base image for Balena
-FROM balenalib/raspberrypi4-ubuntu:latest
+FROM balenalib/raspberrypicm4-ioboard-ubuntu-python:latest
 
 # Set up environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
