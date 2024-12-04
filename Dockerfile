@@ -1,6 +1,5 @@
 # Base image for Balena
-FROM balenalib/aarch64-ubuntu
-LABEL io.balena.device-type="raspberrypicm4-ioboard"
+FROM balenalib/raspberrypicm4-ioboard-ubuntu-python:latest
 
 # Set up environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -20,6 +19,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+    RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
+
 
 # Copy the Pylon SDK tarball into the container
 COPY pylon_6.1.3.20159_armhf_edited.tar.gz /usr/src/app/
