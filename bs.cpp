@@ -6,9 +6,10 @@ int main() {
         // Initialize Pylon
         Pylon::PylonInitialize();
         std::cout << "Pylon initialized successfully." << std::endl;
-
+        camera.Open();
         // Your camera code here...
         camera.RetrieveResult(5000, ptrGrabResult, TimeoutHandling_ThrowException);
+        // camera.Close()
 
         Pylon::PylonTerminate();
     } catch (const Pylon::GenericException& e) {
