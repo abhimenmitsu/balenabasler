@@ -39,7 +39,7 @@ ENV PATH=${PYLON_ROOT}/bin:$PATH
 
 # Create the application working directory
 WORKDIR /usr/src/app
-
+RUN git clone https://github.com/zaphoyd/websocketpp.git
 # Copy the source code into the container
 COPY bsfast.cpp .
 COPY bs.cpp .
