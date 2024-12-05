@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
-
+RUN apt-get update && apt-get install -y libwebsocketpp-dev
 
 # Copy the Pylon SDK tarball into the container
 COPY pylon_6.1.3.20159_armhf_edited.tar.gz /usr/src/app/
@@ -39,7 +39,7 @@ ENV PATH=${PYLON_ROOT}/bin:$PATH
 
 # Create the application working directory
 WORKDIR /usr/src/app
-RUN git clone https://github.com/zaphoyd/websocketpp.git
+#RUN git clone https://github.com/zaphoyd/websocketpp.git
 # Copy the source code into the container
 COPY bsfast.cpp .
 COPY bs.cpp .
