@@ -54,7 +54,7 @@ COPY client.cpp .
 
 
 RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
-RUN file /usr/include/boost -name version.hpp
+#RUN file /usr/include/boost -name version.hpp
 #RUN file /opt/pylon/lib/libpylonbase.so
 
 # Build the application using the specified flags
