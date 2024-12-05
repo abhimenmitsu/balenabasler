@@ -16,6 +16,7 @@
 #include <cerrno>
 #include <vector> 
 #include <unordered_map>
+#include "client.cpp" 
 using namespace GenApi;
 using namespace cv;
 using namespace std;
@@ -64,7 +65,9 @@ int main(int argc, char* argv[]) {
         cerr << "Unable to open log file!" << endl;
         return 1;
     }
-
+    // Initialize WebSocket
+    const std::string ws_uri = "ws://3.131.203.190:8765";
+    initialize_websocket(ws_uri);
     // Connecting to the camera
     cout << "[INFO] Connecting to the first available camera..." << endl;
     CInstantCamera camera(CTlFactory::GetInstance().CreateFirstDevice());
@@ -167,6 +170,7 @@ int main(int argc, char* argv[]) {
         if (Pwhite > 0.01) {
             significantFrames.push_back(openCvImage.clone());
             frameMemory[totalFrames] = openCvImage.clone(); // Save the frame along with its number
+            send_frame_over_websocket(openCvImage.clone());
             logFile << "Significant frame saved: " << totalFrames << endl;
         }
   
