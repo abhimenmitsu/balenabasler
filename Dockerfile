@@ -43,6 +43,7 @@ WORKDIR /usr/src/app
 # Copy the source code into the container
 COPY bsfast.cpp .
 COPY bs.cpp .
+COPY client.cpp .
 
 
 RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
