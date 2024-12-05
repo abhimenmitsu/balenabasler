@@ -63,6 +63,13 @@ void send_frame_over_websocket(const cv::Mat& frame) {
     }
 
     try {
+
+        std::vector<uchar> buf;
+        if (!cv::imencode(".jpg", frame, buf)) {
+            throw std::runtime_error("Failed to encode frame to JPEG.");
+        }
+
+
         ws_client_instance.send(ws_hdl, buf.data(), buf.size(), websocketpp::frame::opcode::binary);
         std::cout << "[WebSocket] Frame sent." << std::endl;
     } catch (const websocketpp::exception& e) {
