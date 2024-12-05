@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     file \
+    g++ \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
@@ -29,7 +30,6 @@ RUN apt-get update && apt-get install -y \
 
 
 RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
-RUN apt-get update && apt-get install -y libwebsocketpp-dev
 
 # Copy the Pylon SDK tarball into the container
 COPY pylon_6.1.3.20159_armhf_edited.tar.gz /usr/src/app/
