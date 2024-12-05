@@ -21,6 +21,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     file \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+RUN apt-get update && apt-get install -y \
+    libboost-all-dev \
+    libwebsocketpp-dev
+
+
+
 RUN pkg-config --modversion opencv || pkg-config --modversion opencv4
 RUN apt-get update && apt-get install -y libwebsocketpp-dev
 
@@ -47,7 +54,7 @@ COPY client.cpp .
 
 
 RUN file /opt/pylon/lib/libpylonbase-6.1.0.so
-
+RUN file /usr/include/boost -name version.hpp
 #RUN file /opt/pylon/lib/libpylonbase.so
 
 # Build the application using the specified flags
