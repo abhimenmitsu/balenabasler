@@ -19,7 +19,7 @@ Repo Structure:
 
 - client.cpp
 
-    - Websocket connect to send over server written in C++
+    - Websocket connection to send over server written in C++
 
 - pylon_6.1.3.20159_armhf_edited.tar.gz
 
